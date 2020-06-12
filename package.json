@@ -1,11 +1,11 @@
 {
-  "name": "@phpixel/node-eloquent",
-  "version": "0.1.13",
+  "name": "@moccacoders/node-eloquent",
+  "version": "0.1.0",
   "description": "",
   "bin": {
     "eloquent": "dist/cli/index.js"
   },
-  "homepage": "https://github.com/MohdSharifIslam/node-eloquent#readme",
+  "homepage": "https://github.com/moccacoders/node-eloquent#readme",
   "main": "dist/index.js",
   "scripts": {
     "local-test": "mocha --require babel-register --require tests/setup/local-setup tests/unit --recursive",
@@ -14,21 +14,27 @@
     "test": "istanbul cover --include-all-sources ./node_modules/.bin/_mocha -- --require babel-register --require tests/setup/setup tests/unit --recursive && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
   },
   "repository": {
-	  "type": "git",
-	  "url": "https://www.npmjs.com/package/@phpixel/node-eloquent"
+    "type": "git",
+    "url": "https://www.npmjs.com/package/moccacoders/node-eloquent"
   },
   "keywords": [
-	  "orm", "node-eloquent", "eloquent", "laravel", "database", "mysql"
+    "orm",
+    "node-eloquent",
+    "eloquent",
+    "laravel",
+    "database",
+    "mysql"
   ],
-  "author": "phpixel",
+  "author": "moccacoders",
   "license": "ISC",
   "dependencies": {
     "babel-cli": "^6.26.0",
+    "dotenv": "8.2.0",
     "pluralize": "^3.0.0"
-},
-"peerDependencies": {
-	"mysql": "^2.11.1",
-	"dotenv": "^6.2.0"
+  },
+  "peerDependencies": {
+    "mysql": "^2.11.1",
+    "dotenv": "^6.2.0"
   },
   "devDependencies": {
     "babel-plugin-transform-async-functions": "^6.8.0",
@@ -42,7 +48,7 @@
     "coveralls": "^3.0.2",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^5.2.0",
-    "mysql": "^2.11.1",
+    "mysql": "2.18.1",
     "sinon": "^1.17.6"
   }
 }

@@ -1,3 +1,4 @@
+import mysql from 'mysql'
 import connection from './connection'
 import Builder from './builder'
 import { getTableName } from '../../../global/get-name'
@@ -40,6 +41,63 @@ class MysqlAdapter {
           id: result.insertId,
           ...data
         }, model))
+      })
+    })
+  }
+
+  /*
+    update a row in the database
+  */
+  update({ model, data, id }) {
+    let where = "";
+    if(data.id){
+      if(!id) id = data.id;
+      delete data.id;
+    }
+
+    if(typeof id != "object" && id != undefined) id = { id };
+    if(id != undefined){
+      where = Object.entries(id).map((data,i) => {
+        const [key, value] = data;
+        return `${key} = '${value}'`
+      }).join(" AND ");
+    }
+
+    return new Promise((resolve, reject) => {
+      if(id == undefined || !id) return reject(new Error("Missing 'id' value or where object. [integer, object]"));
+      connection.query(`UPDATE ${model.tableName()} SET ? WHERE ${where}`, data, (error, result) => {
+        if(error) return reject(error);
+
+        connection.query(`SELECT * FROM ${model.tableName()} WHERE ${where}`, (err, res) => {
+          if(err) return reject(err)
+          resolve(this.makeRelatable({
+            ...res[0]
+          }, model))
+        });
+      })
+    })
+  }
+
+
+  /*
+    delete a row in the database
+  */
+  delete({ model, id }) {
+    let where = "";
+
+    if(typeof id != "object" && id != undefined) id = { id };
+    if(id != undefined){
+      where = Object.entries(id).map((data,i) => {
+        const [key, value] = data;
+        return `${key} = '${value}'`
+      }).join(" AND ");
+    }
+
+    return new Promise((resolve, reject) => {
+      if(id == undefined || !id) return reject(new Error("Missing 'id' value or where object. [integer, object]"));
+      connection.query(`DELETE FROM ${model.tableName()} WHERE ${where}`, (error, result) => {
+        if(error) return reject(error);
+        resolve(result, model);
       })
     })
   }

@@ -62,6 +62,29 @@ export default class Model {
 	}
 
 
+	/*
+	  update a row in the database
+	  ex Model.update({ name: 'raymundo' })
+	*/
+	static update(data, id) {
+		return adapter.update({
+			data,
+			id,
+			model: this
+		})
+	}
+
+	/*
+	  delete a row in the database
+	  ex Model.delete({ id: 1 })
+	*/
+	static delete(id) {
+		return adapter.delete({
+			id,
+			model: this
+		})
+	}
+
 
 	//Query builder methods return a builder instance that is chainable
 
