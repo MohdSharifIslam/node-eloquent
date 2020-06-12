@@ -1,4 +1,3 @@
-import mysql from 'mysql'
 import connection from './connection'
 import Builder from './builder'
 import { getTableName } from '../../../global/get-name'
